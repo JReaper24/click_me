@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Girlfriend?</title>
+    <style>
+        body {
+            background-color: #ffe6ea;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        #container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(255, 75, 110, 0.2);
+            z-index: 10;
+        }
+
+        h1 { color: #ff4b6e; font-size: 2.5rem; margin-bottom: 20px; }
+        
+        .gif { width: 200px; margin-bottom: 20px; border-radius: 10px; }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            position: relative;
+            height: 60px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+            font-weight: bold;
+        }
+
+        #yesBtn { background-color: #ff4b6e; color: white; }
+        #yesBtn:hover { transform: scale(1.1); background-color: #e03a5c; }
+
+        #noBtn {
+            background-color: #f0f0f0;
+            color: #777;
+            position: absolute;
+            left: 55%; /* Start slightly to the right */
+        }
+
+        /* Success Message Styling */
+        .hidden { display: none; }
+        #success-msg { color: #ff4b6e; font-size: 2rem; }
+
+        /* Falling Hearts Animation */
+        .heart {
+            position: fixed;
+            top: -10vh;
+            font-size: 20px;
+            color: #ff4b6e;
+            user-select: none;
+            z-index: 1;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <div id="ask-section">
+            <img src="bear-love-bouncing-mocha-with-flowers-n4m0fyne6h4e6y2x.gif" alt="Cute Cat" class="gif">
+            <h1>Will you be my Girlfriend? 💖</h1>
+            <div class="buttons">
+                <button id="yesBtn">Yes!</button>
+                <button id="noBtn">No</button>
+            </div>
+        </div>
+
+        <div id="success-section" class="hidden">
+            <img src="bear-love-bouncing-mocha-with-flowers-n4m0fyne6h4e6y2x.gif" alt="Happy" class="gif">
+            <h1 id="success-msg">Yay!Kabaw jud ko mo YES ka!! I love you! 🥰❤️</h1>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const askSection = document.getElementById('ask-section');
+        const successSection = document.getElementById('success-section');
+
+        // Make the "No" button run away
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('click', moveButton);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            moveButton();
+        });
+
+        function moveButton() {
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+        }
+
+        // Handle "Yes" click
+        yesBtn.addEventListener('click', () => {
+            askSection.classList.add('hidden');
+            successSection.classList.remove('hidden');
+            startHearts();
+        });
+
+        // Falling hearts effect
+        function startHearts() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+                document.body.appendChild(heart);
+                
+                setTimeout(() => heart.remove(), 5000);
+            }, 100);
+        }
+    </script>
+</body>
+</html>
